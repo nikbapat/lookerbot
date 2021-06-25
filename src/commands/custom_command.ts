@@ -21,6 +21,13 @@ export class CustomCommand extends Command {
 
       const filters: {[key: string]: string} = {}
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters
+      if(typeof query == "string"){
+        context.replyPrivate(query)
+
+      }
+      else{
+        context.replyPrivate(":crying_cat_face: No query.")
+      }
       for (const filter of dashboardFilters) {
         filters[filter.name] = query
       }

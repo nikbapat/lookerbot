@@ -23,9 +23,9 @@ export class DashboardQueryRunner extends QueryRunner {
       throw new Error("Dashboard has no elements.")
     }
 
-    if (elements.length > 1) {
-      throw new Error("Dashboards with more than one element aren't currently supported for Slack commands!!!")
-    }
+    // if (elements.length > 1) {
+    //   throw new Error("Dashboards with more than one element aren't currently supported for Slack commands.")
+    // }
 
     const copy = (obj: any) => JSON.parse(JSON.stringify(obj))
 

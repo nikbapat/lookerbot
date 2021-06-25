@@ -23,7 +23,6 @@ export class CustomCommand extends Command {
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters
       context.replyPrivate(query)
       for (const filter of dashboardFilters) {
-        context.replyPrivate(filter)
         filters[filter.name] = query
       }
       const runner = new DashboardQueryRunner(context, matchedCommand.dashboard, filters)

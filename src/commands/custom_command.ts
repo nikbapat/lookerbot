@@ -23,7 +23,6 @@ export class CustomCommand extends Command {
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters
       if(typeof query == "string"){
         context.replyPrivate(query)
-
       }
       else{
         context.replyPrivate(":crying_cat_face: No query.")

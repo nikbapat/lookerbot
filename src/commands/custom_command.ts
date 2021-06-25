@@ -21,7 +21,6 @@ export class CustomCommand extends Command {
 
       const filters: {[key: string]: string} = {}
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters
-      context.replyPrivate(query)
       for (const filter of dashboardFilters) {
         filters[filter.name] = query
       }

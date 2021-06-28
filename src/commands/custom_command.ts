@@ -26,11 +26,11 @@ export class CustomCommand extends Command {
       var index = 0
       for (const filter of dashboardFilters) {
         console.log(filter.name)
-        if(index < params.length){
+        if(index < params.length){ // replace with iterator
           filters[filter.name] = params[index]
           index++
         }
-        //filters[filter.name] = query
+        // filters[filter.name] = query
       }
       const runner = new DashboardQueryRunner(context, matchedCommand.dashboard, filters)
       runner.start()

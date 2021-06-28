@@ -21,7 +21,9 @@ export class CustomCommand extends Command {
 
       const filters: {[key: string]: string} = {}
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters
+      console.log(query)
       for (const filter of dashboardFilters) {
+        console.log(filter.name)
         filters[filter.name] = query
       }
       const runner = new DashboardQueryRunner(context, matchedCommand.dashboard, filters)

@@ -21,14 +21,16 @@ export class CustomCommand extends Command {
 
       const filters: {[key: string]: string} = {} // creates new filters dict
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters // Looker API dashboard type has both
-
+      console.log(dashboardFilters)
       var params = query.split(";")
+      console.log(params)
       var usedFilters = dashboardFilters.slice(0, params.length)
-      //var usedFilters = dashboardFilters.filter(filt => dashboardFilters.indexOf(filt) < params.length)
+      console.log(usedFilters)
       var iterator = params.values()
       usedFilters.forEach(function (value: string) {
         filters[value] = iterator.next().value
       })
+      console.log(filters)
 
       const runner = new DashboardQueryRunner(context, matchedCommand.dashboard, filters) // calls results from Looker API
       runner.start()

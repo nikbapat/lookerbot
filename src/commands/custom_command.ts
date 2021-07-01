@@ -23,9 +23,10 @@ export class CustomCommand extends Command {
       const dashboardFilters = dashboard.dashboard_filters || dashboard.filters // Looker API dashboard type has both
 
       var params = query.split(";")
-      var usedFilters = dashboardFilters.filter(filt => dashboardFilters.indexOf(filt) < params.length)
+      var usedFilters = dashboardFilters.slice(0, params.length)
+      //var usedFilters = dashboardFilters.filter(filt => dashboardFilters.indexOf(filt) < params.length)
       var iterator = params.values()
-      usedFilters.forEach(function (value) {
+      usedFilters.forEach(function (value: string) {
         filters[value] = iterator.next().value
       })
 

@@ -1,7 +1,6 @@
 import { ILook } from "../looker_api_types"
 import { ReplyContext } from "../reply_context"
 import { QueryRunner } from "./query_runner"
-import { Client, ApiResponse, RequestParams } from '@elastic/elasticsearch'
 
 
 const fuzzySearch = require("fuzzysearch-js")

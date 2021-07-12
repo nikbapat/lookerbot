@@ -5,6 +5,8 @@ import { QueryRunner } from "./query_runner"
 
 const fuzzySearch = require("fuzzysearch-js")
 const levenshteinFS = require("fuzzysearch-js/js/modules/LevenshteinFS")
+const IndexOfFS = require("fuzzysearch-js/js/modules/IndexOfFS")
+const WordCountFS = require("fuzzysearch-js/js/modules/WordCountFS")
 
 export class LookFinder extends QueryRunner {
 
@@ -59,6 +61,8 @@ export class LookFinder extends QueryRunner {
   
     const searcher = new fuzzySearch(searchTerms, {termPath: "title"})
     searcher.addModule(levenshteinFS({maxDistanceTolerance: 3, factor: 3}))
+    searcher.addModule(IndexOfFS({'minTermLength': 3, 'maxIterations': 500, 'factor': 3}));
+    searcher.addModule(WordCountFS({'maxWordTolerance': 3, 'factor': 1}))
     const results = searcher.search(this.query)
 
     return results

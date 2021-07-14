@@ -33,6 +33,7 @@ export class DashboardQueryRunner extends QueryRunner {
         queryDef.filter_config = null
         queryDef.client_id = null
 
+
         if (element.listen) {
           for (const dashFilterName of Object.keys(element.listen)) {
             const fieldName = element.listen[dashFilterName]
@@ -56,13 +57,16 @@ export class DashboardQueryRunner extends QueryRunner {
         throw new Error("Dashboard Element has no Look, Query.")
       }
 
+
       const query: IQuery = await this.replyContext.looker.client.postAsync(
         "queries",
         queryDef,
         {},
         this.replyContext,
       )
-      this.runQuery(query)
+
+
+      this.runQuery(query, element["title"])
     }
   }
 }

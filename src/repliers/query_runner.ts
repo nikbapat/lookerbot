@@ -42,7 +42,6 @@ export class QueryRunner extends FancyReplier {
   }
 
   protected async postImage(query: IQuery, imageData: Buffer, title?: string) {
-    console.log("here3")
     if (!blobStores.current) {
       this.reply(":warning: No storage is configured for visualization images in the bot configuration.")
       return

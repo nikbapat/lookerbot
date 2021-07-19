@@ -8,13 +8,13 @@ import { Command } from "./command"
 export class CustomCommand extends Command {
 
   public attempt(context: ReplyContext) {
-    const normalizedText = context.sourceMessage.text.toLowerCase() // lowercase
+    const normalizedText = context.sourceMessage.text.toLowerCase().replace("*", "").replace("*", "") // lowercase
     const shortCommands = _.sortBy(_.values(Looker.customCommands), (c) => -c.name.length) // sorts commands by name length
     const matchedCommand = shortCommands.filter((c) => normalizedText.indexOf(c.name) === 0)[0] // finds the matching command
     if (matchedCommand) {
 
       const { dashboard } = matchedCommand // finds appropriate dashboard
-      const query = context.sourceMessage.text.slice(matchedCommand.name.length).trim() // separates command from parameters
+      const query = normalizedText.slice(matchedCommand.name.length).trim() // separates command from parameters
       normalizedText.indexOf(matchedCommand.name) // doesnt seem to do anything?
 
       context.looker = matchedCommand.looker

@@ -14,9 +14,14 @@ export class DashboardQueryRunner extends QueryRunner {
     this.filters = filters
   }
 
+
   protected showShareUrl() { return true }
 
   protected async work() {
+    this.reply({
+          // text: this.dashboard.title,
+          text: this.replyContext.looker.url + "/dashboards/" + this.dashboard.id
+      })
     const elements = this.dashboard.dashboard_elements || this.dashboard.elements
 
     if (!elements || elements.length === 0) {
@@ -57,14 +62,12 @@ export class DashboardQueryRunner extends QueryRunner {
         throw new Error("Dashboard Element has no Look, Query.")
       }
 
-
       const query: IQuery = await this.replyContext.looker.client.postAsync(
         "queries",
         queryDef,
         {},
         this.replyContext,
       )
-
 
       this.runQuery(query, element["title"])
     }

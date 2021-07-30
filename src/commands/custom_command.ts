@@ -14,7 +14,7 @@ export class CustomCommand extends Command {
     if (matchedCommand) {
 
       const { dashboard } = matchedCommand // finds appropriate dashboard
-      const query = normalizedText.slice(matchedCommand.name.length).trim() // separates command from parameters
+      const query = context.sourceMessage.text.replace("*", "").replace("*", "").slice(matchedCommand.name.length).trim() // separates command from parameters
       normalizedText.indexOf(matchedCommand.name) // doesnt seem to do anything?
 
       context.looker = matchedCommand.looker

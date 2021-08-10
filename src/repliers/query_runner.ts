@@ -10,6 +10,7 @@ export class QueryRunner extends FancyReplier {
 
   protected querySlug?: string
   protected queryId?: number
+  protected label?: string
 
   constructor(replyContext: ReplyContext, queryParam: {slug?: string, id?: number} = {}) {
     super(replyContext)
@@ -20,7 +21,12 @@ export class QueryRunner extends FancyReplier {
   protected showShareUrl() { return false }
 
   protected linkText(shareUrl: string) {
-    return shareUrl
+    if(this.label){
+      return this.label
+    }
+    else{
+      return shareUrl
+    }
   }
 
   protected linkUrl(shareUrl: string) {
@@ -35,7 +41,7 @@ export class QueryRunner extends FancyReplier {
     }
   }
 
-  protected async postImage(query: IQuery, imageData: Buffer) {
+  protected async postImage(query: IQuery, imageData: Buffer, title?: string) {
     if (!blobStores.current) {
       this.reply(":warning: No storage is configured for visualization images in the bot configuration.")
       return
@@ -48,6 +54,9 @@ export class QueryRunner extends FancyReplier {
 
     try {
       const url = await blobStores.current.storeImage(imageData)
+      if(title){
+        this.label = title
+      }
       this.reply({
         attachments: [
           {
@@ -97,7 +106,8 @@ export class QueryRunner extends FancyReplier {
     }
   }
 
-  protected async runQuery(query: IQuery) {
+  protected async runQuery(query: IQuery, title?: string) {
+
     const visType: string = query.vis_config && query.vis_config.type ? query.vis_config.type : "table"
 
     if (visType === "table" || visType === "looker_single_record" || visType === "single_value") {
@@ -116,7 +126,7 @@ export class QueryRunner extends FancyReplier {
           `queries/${query.id}/run/png`,
           this.replyContext,
         )
-        this.postImage(query, imageData)
+        this.postImage(query, imageData, title)
       } catch (e) {
         if (e.error && e.error === "Received empty response from Looker.") {
           this.replyError("Did not receive an image from Looker.\nThe \"PDF Download & Scheduling and Scheduled Visualizations\" Labs feature must be enabled to render images.")

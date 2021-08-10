@@ -14,17 +14,18 @@ export class DashboardQueryRunner extends QueryRunner {
     this.filters = filters
   }
 
+
   protected showShareUrl() { return true }
 
   protected async work() {
+    this.reply({
+          // text: this.dashboard.title,
+          text: this.replyContext.looker.url + "/dashboards/" + this.dashboard.id
+      })
     const elements = this.dashboard.dashboard_elements || this.dashboard.elements
 
     if (!elements || elements.length === 0) {
       throw new Error("Dashboard has no elements.")
-    }
-
-    if (elements.length > 1) {
-      throw new Error("Dashboards with more than one element aren't currently supported for Slack commands.")
     }
 
     const copy = (obj: any) => JSON.parse(JSON.stringify(obj))
@@ -36,6 +37,7 @@ export class DashboardQueryRunner extends QueryRunner {
         queryDef = copy(element.query || element.look!.query)
         queryDef.filter_config = null
         queryDef.client_id = null
+
 
         if (element.listen) {
           for (const dashFilterName of Object.keys(element.listen)) {
@@ -66,7 +68,8 @@ export class DashboardQueryRunner extends QueryRunner {
         {},
         this.replyContext,
       )
-      this.runQuery(query)
+
+      this.runQuery(query, element["title"])
     }
   }
 }

@@ -3,49 +3,49 @@ import config from "../config"
 import { IRichMessage, Message, SentMessage } from "../message"
 import { ReplyContext } from "../reply_context"
 
-const sassyMessages = [
+// const sassyMessages = [
 
-  // English
-  ["us", "Just a second"],
-  ["us", "Thinking"],
-  ["ca", "On it"],
-  ["us", "Working on it"],
-  ["gb", "Queueing"],
-  ["gb", "Having a think"],
-  ["ca", "One moment please"],
-  ["in", "Give me a minute"],
-  ["pk", "Hold on"],
-  ["ng", "Looking into it"],
-  ["ph", "One sec"],
-  ["ph", "Working it out"],
-  ["us", "Hold please"],
-  ["eg", "Wait a moment"],
-  ["eg", "Hmm"],
+//   // English
+//   ["us", "Just a second"],
+//   ["us", "Thinking"],
+//   ["ca", "On it"],
+//   ["us", "Working on it"],
+//   ["gb", "Queueing"],
+//   ["gb", "Having a think"],
+//   ["ca", "One moment please"],
+//   ["in", "Give me a minute"],
+//   ["pk", "Hold on"],
+//   ["ng", "Looking into it"],
+//   ["ph", "One sec"],
+//   ["ph", "Working it out"],
+//   ["us", "Hold please"],
+//   ["eg", "Wait a moment"],
+//   ["eg", "Hmm"],
 
-  // Cooler Languages
-  ["es", "Un momento, por favor"],
-  ["mx", "Por favor espera"],
-  ["de", "Bitte warten Sie einen Augenblick"],
-  ["jp", "お待ちください"],
-  ["ca", "Un moment s'il vous plait"],
-  ["cn", "稍等一會兒"],
-  ["nl", "Even geduld aub"],
-  ["so", "Ka shaqeeya waxaa ku"],
-  ["th", "กรุณารอสักครู่"],
-  ["ru", "один момент, пожалуйста"],
-  ["fi", "Hetkinen"],
-  ["ro", "Lucrez la asta"],
-  ["is", "Eitt andartak"],
-  ["az", "Bir dəqiqə zəhmət olmasa"],
-  ["ie", "Fán le do thoil"],
-  ["ne", "कृपया पर्खनुहोस्"],
-  ["in", "कृपया एक क्षण के लिए"],
+//   // Cooler Languages
+//   // ["es", "Un momento, por favor"],
+//   // ["mx", "Por favor espera"],
+//   // ["de", "Bitte warten Sie einen Augenblick"],
+//   // ["jp", "お待ちください"],
+//   // ["ca", "Un moment s'il vous plait"],
+//   // ["cn", "稍等一會兒"],
+//   // ["nl", "Even geduld aub"],
+//   // ["so", "Ka shaqeeya waxaa ku"],
+//   // ["th", "กรุณารอสักครู่"],
+//   // ["ru", "один момент, пожалуйста"],
+//   // ["fi", "Hetkinen"],
+//   // ["ro", "Lucrez la asta"],
+//   // ["is", "Eitt andartak"],
+//   // ["az", "Bir dəqiqə zəhmət olmasa"],
+//   // ["ie", "Fán le do thoil"],
+//   // ["ne", "कृपया पर्खनुहोस्"],
+//   // ["in", "कृपया एक क्षण के लिए"],
 
-].map((param) => {
-  const [country, message] = param
-  const translate = `https://translate.google.com/#auto/auto/${encodeURIComponent(message)}`
-  return `<${translate}|:flag-${country}:> _${message}..._`
-})
+// ].map((param) => {
+//   const [country, message] = param
+//   const translate = `https://translate.google.com/#auto/auto/${encodeURIComponent(message)}`
+//   return `<${translate}|:flag-${country}:> _${message}..._`
+// })
 
 export abstract class FancyReplier {
 
@@ -115,19 +115,19 @@ export abstract class FancyReplier {
       return
     }
 
-    let sass = this.replyContext.isSlashCommand() ?
-      "…"
-    :
-      sassyMessages[Math.floor(Math.random() * sassyMessages.length)]
+    // let sass = this.replyContext.isSlashCommand() ?
+    //   "…"
+    // :
+    //   sassyMessages[Math.floor(Math.random() * sassyMessages.length)]
 
-    if (config.unsafeLocalDev) {
-      sass = `[DEVELOPMENT] ${sass}`
-    }
+    // if (config.unsafeLocalDev) {
+    //   sass = `[DEVELOPMENT] ${sass}`
+    // }
 
     const params = {
       as_user: true,
       attachments: [], // Override some Botkit stuff
-      text: sass,
+      text: "Loading...",
       unfurl_links: false,
       unfurl_media: false,
     }

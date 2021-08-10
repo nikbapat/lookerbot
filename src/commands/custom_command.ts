@@ -8,23 +8,30 @@ import { Command } from "./command"
 export class CustomCommand extends Command {
 
   public attempt(context: ReplyContext) {
-    const normalizedText = context.sourceMessage.text.toLowerCase()
-    const shortCommands = _.sortBy(_.values(Looker.customCommands), (c) => -c.name.length)
-    const matchedCommand = shortCommands.filter((c) => normalizedText.indexOf(c.name) === 0)[0]
+    const normalizedText = context.sourceMessage.text.toLowerCase().replace("*", "").replace("*", "") // lowercase
+    const shortCommands = _.sortBy(_.values(Looker.customCommands), (c) => -c.name.length) // sorts commands by name length
+    const matchedCommand = shortCommands.filter((c) => normalizedText.indexOf(c.name) === 0)[0] // finds the matching command
     if (matchedCommand) {
 
-      const { dashboard } = matchedCommand
-      const query = context.sourceMessage.text.slice(matchedCommand.name.length).trim()
-      normalizedText.indexOf(matchedCommand.name)
+      const { dashboard } = matchedCommand // finds appropriate dashboard
+      const query = context.sourceMessage.text.replace("*", "").replace("*", "").slice(matchedCommand.name.length).trim() // separates command from parameters
+      normalizedText.indexOf(matchedCommand.name) // doesnt seem to do anything?
 
       context.looker = matchedCommand.looker
 
-      const filters: {[key: string]: string} = {}
-      const dashboardFilters = dashboard.dashboard_filters || dashboard.filters
-      for (const filter of dashboardFilters) {
-        filters[filter.name] = query
-      }
-      const runner = new DashboardQueryRunner(context, matchedCommand.dashboard, filters)
+      const filters: {[key: string]: string} = {} // creates new filters dict
+      const dashboardFilters = dashboard.dashboard_filters || dashboard.filters // Looker API dashboard type has both
+
+      var params = query.split(";")
+      var usedFilters = dashboardFilters.slice(0, params.length)
+
+      var iterator = params.values()
+      usedFilters.forEach(function (value: any) {
+        filters[value.name] = iterator.next().value
+      })
+
+
+      const runner = new DashboardQueryRunner(context, matchedCommand.dashboard, filters) // calls results from Looker API
       runner.start()
 
       return true

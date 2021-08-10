@@ -17,6 +17,7 @@ export interface IDashboard {
 export interface IDashboardElement {
   look?: ILook
   query?: IQuery
+  title?: string
   listen?: {[key: string]: string} // deprecated
   result_maker_id?: number
   result_maker?: {
@@ -52,6 +53,7 @@ export interface IQueryFilters {
 export interface IQuery {
   id: number
   slug: string
+  title?: string
   share_url: string
   vis_config: {
     type?: string;
